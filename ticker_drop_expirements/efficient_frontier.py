@@ -17,6 +17,16 @@ class Efficient_Frontier:
             
             returns = self.stock_df.pct_change().mean()
             return returns
+
+        if method == "log_returns":
+
+            returns = self.stock_df.pct_change()
+            for i in self.tickers:
+                returns[i] = np.log(1 + returns[i])
+
+            returns = returns.mean()
+            return returns
+
         
     def risk_calculation(self, method):
         
@@ -69,5 +79,3 @@ class Efficient_Frontier:
         min_vol_port = results.iloc[results['stdev'].idxmin()]
         
         return max_sharpe_port, min_vol_port
-        
-
